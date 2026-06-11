@@ -30,11 +30,15 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Move()
     {
-        
+        Vector3 moveDistance =
+        playerInput.move * transform.forward * moveSpeed * Time.fixedDeltaTime; // 이동 거리 계산
+        playerRigidbody.MovePosition(playerRigidbody.position + moveDistance); // 리지드바디 이동
     }
 
     private void Rotate()
     {
-        
+        float turn = playerInput.rotate * rotateSpeed * Time.fixedDeltaTime; // 회전 각도 계산
+        playerRigidbody.rotation =
+            playerRigidbody.rotation * Quaternion.Euler(0, turn, 0); // 리지드바디 회전
     }
 }
