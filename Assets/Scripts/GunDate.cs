@@ -13,4 +13,6 @@ public class GunDate : ScriptableObject
 
     public float timeBestFire = 0.12f; //탄알발사 간격
     public float reloadTime = 1.8f; // 재장전 소요시간
+    internal AudioClip shotClip;
+    internal float timeBetFire;
 }

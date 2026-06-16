@@ -49,22 +49,57 @@ public class Gun : MonoBehaviour
 
 
     public void Fire()
-    {
-      
+    { //현재 상태가 발사 가능한 상태
+      //&& 마지막 총 발사 시점에서 gunDate.timeBetFire 이상이 지났는지 확인
+        if (state == State.Ready && Time.time >= lastFireTime + gunDate.timeBetFire)
+        {
+          lastFireTime = Time.time; // 마지막 발사 시간 업데이트
+          Shot(); // 총 발사 처리
+        }
+
     }
 
     private void Shot()
     {
-      
+        RaycastHit hit; // 레이캐스트 충돌 정보를 저장할 변수
+
+        Vector3 hitPosition = Vector3.zero; // 총알이 충돌한 위치 초기화
+
+        if (Physics.Raycast(fireTransform.position, fireTransform.forward, out hit, fireDistance))
+        {
+            IDamageable target = hit.collider.GetComponent<IDamageable>(); // 충돌한 객체에서 IDamageable 인터페이스 가져오기
+            if (target != null)
+            {
+                target.onDamage(gunDate.damage, hit.point, hit.normal); // 대상에게 데미지 전달
+            }
+            hitPosition = hit.point; // 총알이 충돌한 위치 설정
+        }
+        else
+        {
+            hitPosition = fireTransform.position + fireTransform.forward * fireDistance; // 총알이 최대 거리까지 날아간 위치 설정
+        }
+        StartCoroutine(ShotEffect(hitPosition)); // 총 발사 효과 재생
+
+        magAmmo--; // 탄창에서 탄알 하나 감소
+        if (magAmmo <= 0)
+        {
+            state = State.Empty; // 탄창이 빔 상태로 변경
+        }
     }
 
     private IEnumerator ShotEffect( Vector3 hitPosition)
     {
-        bulletLineRenderer.enabled = true;
+       muzzleFlashEffect.Play(); // 총구 화염 효과 재생
+         sheliEjectEffect.Play(); // 탄피 배출 효과 재생
 
-        yield return new WaitForSeconds(0.03f); // 총알 궤적을 잠시 보여줌
+        gunAudioPlayer.PlayOneShot(gunDate.shotClip); // 총 소리 재생
 
-        bulletLineRenderer.enabled = false;
+        bulletLineRenderer.SetPosition(0, fireTransform.position); // 총알 궤적의 시작점 설정
+        bulletLineRenderer.SetPosition(1, hitPosition); // 총알 궤적의 끝점 설정
+        bulletLineRenderer.enabled = true; // 총알 궤적 보이도록 설정
+
+        yield return new WaitForSeconds(0.03f); // 총알 궤적이 보이는 시간 대기
+        bulletLineRenderer.enabled = false; // 총알 궤적 숨기기
 
     }
 
