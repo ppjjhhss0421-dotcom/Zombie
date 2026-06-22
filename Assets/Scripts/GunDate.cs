@@ -15,4 +15,6 @@ public class GunDate : ScriptableObject
     public float reloadTime = 1.8f; // 재장전 소요시간
     internal AudioClip shotClip;
     internal float timeBetFire;
+
+
 }
