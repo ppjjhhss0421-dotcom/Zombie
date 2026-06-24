@@ -1,0 +1,11 @@
+using UnityEngine;
+
+public class Dragon : Monster
+
+{
+    public void Fly()
+    {
+        Debug.Log("µÂ∑°∞Ô¿Ã ≥Øæ∆∞©¥œ¥Ÿ.");
+    }   
+    
+}
