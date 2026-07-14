@@ -5,7 +5,14 @@ public class AmmoPack : MonoBehaviour, Iitem
     public int ammo = 30;
     public void Use(GameObject target)
     {
-        Debug.Log("탄알이 증가했다 : " + ammo);
+        PlayerShooter playerShooter = target.GetComponent<PlayerShooter>();
+
+        if (playerShooter != null && playerShooter.gun != null)
+        {
+            playerShooter.gun.ammoRemain += ammo;
+           
+        }
+        Destroy(gameObject);
     }
 
    

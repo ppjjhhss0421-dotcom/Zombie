@@ -51,17 +51,17 @@ public class PlayerShooter : MonoBehaviour
             }
 
             // 남은 탄알 UI 갱신
-            UpdataUI();
+            UpdateUI();
         }
     }
 
     // 탄알 UI 갱신
-    private void UpdataUI()
+    private void UpdateUI()
     {
-        if(gun != null && UIManager.instance != null)
+        if (gun != null && UIManager.Instance != null)
         {
             // UI 매니저의 탄알 텍스트에 탄창의 탄알과 남은 전체 탄알 표시
-            UIManager.instance.UpdateAmmoText(gun.magAmmo, gun.ammoRemain);
+            UIManager.Instance.UpdateAmmoText(gun.magAmmo, gun.ammoRemain);
         }
     }
 

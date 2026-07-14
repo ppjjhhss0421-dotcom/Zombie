@@ -28,9 +28,9 @@ public class LivingEntity : MonoBehaviour, IDamageable
         {
             return; //사망한 상태에서는 체력을 회복할 수 없음
         }
-        
-            health += startingHealth; //체력 추가
-        
+
+            health += newHealth; //체력 추가
+
     }
 
     public virtual void Die() //onDeath 이벤트를 호출하고 사망 상태로 변경하는 메서드
@@ -41,5 +41,9 @@ public class LivingEntity : MonoBehaviour, IDamageable
         }
         dead = true; //사망 상태로 변경
     }
-    
+
+    internal void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    {
+        throw new NotImplementedException();
+    }
 }
